@@ -12,16 +12,16 @@ assignees: ''
 **Describe the bug**
 A clear and concise description of what the bug is.
 
-**Apex PMD Output**
+**Java PMD Output**
 <!-- Please make sure "Show StdErr" and "Show StdOut" Settings are enabled -->
 
-**Apex PMD Settings**
+**Java PMD Settings**
 <!-- Please provide the "EFFECTIVE" (check workspace & user) settings -->
 
 - pmdPath:
 - rulesetPath:
 
-**Apex File**
+**Java File**
 <!-- The File you were running the tool on (if applicable)-->
 
 **Screenshots**

@@ -1,6 +1,6 @@
-# Apex-only Distribution
+# Java-only Distribution
 
-Sample project which shows how to create a binary distribution stripped down to one language module (Apex).
+Sample project which shows how to create a binary distribution stripped down to one language module (Java).
 The difference with other branches in this repo is that this only repackages the pmd distribution without adding new rules. This may be useful in tools that integrate PMD, eg IDE plugins.
 
 You can build the project using maven:
@@ -9,7 +9,7 @@ You can build the project using maven:
 $ ./mvnw clean verify
 ```
 
-This results in a zip file: `target/pmd-apex-bin-6.23.0.zip`. It can be installed [like any pmd distribution](https://pmd.github.io/latest/pmd_userdocs_installation.html#installation) but only contains the Apex module (and no designer).
+This results in a zip file: `target/pmd-java-bin-6.23.0.zip`. It can be installed [like any pmd distribution](https://pmd.github.io/latest/pmd_userdocs_installation.html#installation) but only contains the Java module (and no designer).
 
 ## Customize the build
 

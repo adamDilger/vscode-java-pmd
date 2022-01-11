@@ -1,19 +1,19 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import { ApexPmd } from './lib/apexPmd';
+import { JavaPmd } from './lib/javaPmd';
 import { Config } from './lib/config';
 import { AppStatus } from './lib/appStatus';
 import { debounce } from 'debounce';
 import { getRootWorkspacePath } from './lib/utils';
-export { ApexPmd };
+export { JavaPmd };
 
-const supportedLanguageCodes = ['apex', 'visualforce'];
+const supportedLanguageCodes = ['java'];
 const isSupportedLanguage = (langCode: string) => 0 <= supportedLanguageCodes.indexOf(langCode);
 
-const appName = 'Apex PMD';
-const settingsNamespace = 'apexPMD';
-const collection = vscode.languages.createDiagnosticCollection('apex-pmd');
+const appName = 'Java PMD';
+const settingsNamespace = 'javaPMD';
+const collection = vscode.languages.createDiagnosticCollection('java-pmd');
 const outputChannel = vscode.window.createOutputChannel(appName);
 
 export function activate(context: vscode.ExtensionContext) {
@@ -21,19 +21,19 @@ export function activate(context: vscode.ExtensionContext) {
   const config = new Config(context);
 
   //setup instance vars
-  const pmd = new ApexPmd(outputChannel, config);
+  const pmd = new JavaPmd(outputChannel, config);
   AppStatus.setAppName(appName);
   AppStatus.getInstance().ok();
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('apex-pmd.clearProblems', () => {
+    vscode.commands.registerCommand('java-pmd.clearProblems', () => {
       collection.clear();
     })
   );
 
   //setup commands
   context.subscriptions.push(
-    vscode.commands.registerCommand('apex-pmd.runWorkspace', () => {
+    vscode.commands.registerCommand('java-pmd.runWorkspace', () => {
       vscode.window.withProgress(
         {
           location: vscode.ProgressLocation.Notification,
@@ -49,7 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('apex-pmd.runFile', (fileName: string) => {
+    vscode.commands.registerCommand('java-pmd.runFile', (fileName: string) => {
       if (!fileName) {
         fileName = vscode.window.activeTextEditor.document.fileName;
       }
@@ -61,7 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
   if (config.runOnFileSave) {
     vscode.workspace.onDidSaveTextDocument((textDocument) => {
       if (isSupportedLanguage(textDocument.languageId)) {
-        return vscode.commands.executeCommand('apex-pmd.runFile', textDocument.fileName);
+        return vscode.commands.executeCommand('java-pmd.runFile', textDocument.fileName);
       }
     });
   }
@@ -71,7 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
       debounce((textDocumentChangeEvent: vscode.TextDocumentChangeEvent) => {
         const textDocument = textDocumentChangeEvent.document;
         if (isSupportedLanguage(textDocument.languageId)) {
-          return vscode.commands.executeCommand('apex-pmd.runFile', textDocument.fileName);
+          return vscode.commands.executeCommand('java-pmd.runFile', textDocument.fileName);
         }
       }, config.onFileChangeDebounce)
     );
@@ -80,7 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
   if (config.runOnFileOpen) {
     vscode.window.onDidChangeActiveTextEditor((editor) => {
       if (isSupportedLanguage(editor.document.languageId)) {
-        return vscode.commands.executeCommand('apex-pmd.runFile', editor.document.fileName, true);
+        return vscode.commands.executeCommand('java-pmd.runFile', editor.document.fileName, true);
       }
     });
   }

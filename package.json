@@ -1,89 +1,67 @@
 {
-  "name": "apex-pmd",
-  "displayName": "Apex PMD",
-  "description": "PMD static analysis for Salesforce Apex",
+  "name": "java-pmd",
+  "displayName": "Java PMD",
+  "description": "PMD static analysis for Java",
   "version": "0.5.8",
-  "publisher": "chuckjonas",
+  "publisher": "cracrayol",
   "author": {
-    "name": "Charlie Jonas",
-    "email": "charlie@callawaycloudconsulting.com"
+    "name": "cracrayol",
+    "email": "contact@cracrayol.org"
   },
   "engines": {
     "vscode": "^1.43.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ChuckJonas/vscode-apex-pmd.git"
+    "url": "https://github.com/cracrayol/vscode-java-pmd.git"
   },
   "bugs": {
-    "url": "https://github.com/ChuckJonas/vscode-apex-pmd/issues"
+    "url": "https://github.com/cracrayol/vscode-java-pmd/issues"
   },
-  "icon": "images/vscode-apex-pmd.png",
+  "icon": "images/vscode-java-pmd.png",
   "categories": [
     "Linters"
   ],
   "keywords": [
-    "Salesforce",
-    "Apex",
+    "Java",
     "Static Analysis",
     "PMD"
   ],
   "activationEvents": [
-    "*"
+    "onLanguage:java",
+    "onCommand:java-pmd.runWorkspace",
+    "onCommand:java-pmd.runFile",
+    "onCommand:java-pmd.clearProblems"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "apex-pmd.runWorkspace",
+        "command": "java-pmd.runWorkspace",
         "title": "On Workspace",
-        "category": "Apex Static Analysis"
+        "category": "Java Static Analysis"
       },
       {
-        "command": "apex-pmd.runFile",
+        "command": "java-pmd.runFile",
         "title": "On File",
-        "category": "Apex Static Analysis"
+        "category": "Java Static Analysis"
       },
       {
-        "command": "apex-pmd.clearProblems",
+        "command": "java-pmd.clearProblems",
         "title": "Clear Problems",
-        "category": "Apex Static Analysis"
-      }
-    ],
-    "languages": [
-      {
-        "id": "apex",
-        "extensions": [
-          ".apxc",
-          ".cls",
-          ".trigger"
-        ],
-        "aliases": [
-          "Apex"
-        ]
-      },
-      {
-        "id": "visualforce",
-        "extensions": [
-          ".page",
-          ".component"
-        ],
-        "aliases": [
-          "VisualForce",
-          "Visualforce"
-        ]
+        "category": "Java Static Analysis"
       }
     ],
     "configuration": {
       "type": "object",
-      "title": "Apex PMD configuration",
+      "title": "Java PMD configuration",
       "properties": {
-        "apexPMD.pmdBinPath": {
+        "javaPMD.pmdBinPath": {
           "type": "string",
           "default": "",
           "description": "(Optional) Path to where PMD was installed"
         },
-        "apexPMD.rulesets": {
+        "javaPMD.rulesets": {
           "type": "array",
           "items": {
             "type": "string"
@@ -91,57 +69,57 @@
           "default": [],
           "description": "(Optional) Paths to rulesets' xml files."
         },
-        "apexPMD.runOnFileOpen": {
+        "javaPMD.runOnFileOpen": {
           "type": "boolean",
           "default": false,
           "description": "Will run static analysis every time a file is opened"
         },
-        "apexPMD.runOnFileSave": {
+        "javaPMD.runOnFileSave": {
           "type": "boolean",
           "default": true,
           "description": "Will run static analysis every time a file is saved"
         },
-        "apexPMD.runOnFileChange": {
+        "javaPMD.runOnFileChange": {
           "type": "boolean",
           "default": false,
           "description": "Will run static analysis every time a file is changed (with a 500ms debounce delay)"
         },
-        "apexPMD.onFileChangeDebounce": {
+        "javaPMD.onFileChangeDebounce": {
           "type": "integer",
           "default": 3000,
           "description": "Debounce interval to wait before running pmd after document change.  Only applicable if `runOnFileChange == true`"
         },
-        "apexPMD.priorityErrorThreshold": {
+        "javaPMD.priorityErrorThreshold": {
           "type": "number",
           "default": 1,
           "description": "Determines at what priority level 'errors' will be added. Anything less will be a warning or hint"
         },
-        "apexPMD.priorityWarnThreshold": {
+        "javaPMD.priorityWarnThreshold": {
           "type": "number",
           "default": 3,
           "description": "Determines at what priority level 'warnings' will be added. Anything less will be a hint"
         },
-        "apexPMD.showErrors": {
+        "javaPMD.showErrors": {
           "type": "boolean",
           "default": true,
           "description": "Show errors in output window"
         },
-        "apexPMD.showStdOut": {
+        "javaPMD.showStdOut": {
           "type": "boolean",
           "default": false,
           "description": "Show showStdOut in output window"
         },
-        "apexPMD.showStdErr": {
+        "javaPMD.showStdErr": {
           "type": "boolean",
           "default": true,
           "description": "Show showStdErr in output window"
         },
-        "apexPMD.enableCache": {
+        "javaPMD.enableCache": {
           "type": "boolean",
           "default": false,
           "description": "Creates a cache file for PMD to run faster. Will create a .pmdCache file in your workspace"
         },
-        "apexPMD.additionalClassPaths": {
+        "javaPMD.additionalClassPaths": {
           "type": "array",
           "items": {
             "type": "string"
@@ -149,12 +127,12 @@
           "default": [],
           "description": "(Optional) paths to be appended to classpath. Used to find jar files containing custom rule definitions. Can be absolute or relative to workspace."
         },
-        "apexPMD.commandBufferSize": {
+        "javaPMD.commandBufferSize": {
           "type": "number",
           "default": "64",
           "description": "Size of buffer used to collect PMD command output (MB), may need to be increased for very large projects"
         },
-        "apexPMD.jrePath": {
+        "javaPMD.jrePath": {
           "type": "string",
           "description": "(Optional) Path to JRE (Folder that contains which contains `bin/java`)"
         }
@@ -163,16 +141,16 @@
     "menus": {
       "explorer/context": [
         {
-          "when": "resourceLangId == 'apex'",
-          "command": "apex-pmd.runFile",
-          "group": "apex-pmd"
+          "when": "resourceLangId == 'java'",
+          "command": "java-pmd.runFile",
+          "group": "java-pmd"
         }
       ],
       "editor/context": [
         {
-          "when": "resourceLangId == 'apex'",
-          "command": "apex-pmd.runFile",
-          "group": "apex-pmd"
+          "when": "resourceLangId == 'java'",
+          "command": "java-pmd.runFile",
+          "group": "java-pmd"
         }
       ]
     }

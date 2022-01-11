@@ -29,12 +29,12 @@ export class Config {
       this._ctx = ctx;
       this.init();
     } else {
-      console.warn('VSCode ApexPMD missing configuration');
+      console.warn('VSCode JavaPMD missing configuration');
     }
   }
 
   public init() {
-    const config = vscode.workspace.getConfiguration('apexPMD');
+    const config = vscode.workspace.getConfiguration('javaPMD');
     // deprecated setting is left for backward compatibility
     this._rulesetPath = config.get('rulesetPath');
     this.workspaceRootPath = getRootWorkspacePath();
@@ -65,7 +65,7 @@ export class Config {
       this.rulesets = this.rulesets.map((p) => {
         let res = p;
         if ('default' === res.toLowerCase()) {
-          res = this._ctx.asAbsolutePath(path.join('rulesets', 'apex_ruleset.xml'));
+          res = this._ctx.asAbsolutePath(path.join('rulesets', 'quickstart.xml'));
         } else if (!path.isAbsolute(res) && this.workspaceRootPath) {
           res = path.join(this.workspaceRootPath, res);
         }
@@ -74,7 +74,7 @@ export class Config {
     }
 
     if (!this._rulesetPath && !this.rulesets.length) {
-      this._rulesetPath = this._ctx.asAbsolutePath(path.join('rulesets', 'apex_ruleset.xml'));
+      this._rulesetPath = this._ctx.asAbsolutePath(path.join('rulesets', 'quickstart.xml'));
     } else if (this._rulesetPath && !path.isAbsolute(this._rulesetPath) && this.workspaceRootPath) {
       //convert relative path to absolute
       this._rulesetPath = path.join(this.workspaceRootPath, this._rulesetPath);

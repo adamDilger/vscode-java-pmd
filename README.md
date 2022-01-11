@@ -1,13 +1,11 @@
-# vscode Apex Pmd
+# vscode Java Pmd
 
-[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/chuckjonas.apex-pmd) ![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/total/chuckjonas.apex-pmd)](https://marketplace.visualstudio.com/items?itemName=chuckjonas.apex-pmd)
-[![Build Status](https://travis-ci.org/ChuckJonas/vscode-apex-pmd.svg?branch=master)](https://travis-ci.org/ChuckJonas/vscode-apex-pmd)
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/cracrayol.java-pmd) ![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/total/cracrayol.java-pmd)](https://marketplace.visualstudio.com/items?itemName=cracrayol.java-pmd)
+[![Build Status](https://travis-ci.org/cracrayol/vscode-java-pmd.svg?branch=master)](https://travis-ci.org/cracrayol/vscode-java-pmd)
 
-Allows you to run [Apex Static Analysis](https://pmd.github.io/latest/index.html) directly in vscode on apex & VisualForce files.
+Allows you to run [Java Static Analysis](https://pmd.github.io/latest/index.html) directly in vscode on java files.
 
-## Features
-
-![Apex PMD](https://raw.githubusercontent.com/ChuckJonas/vscode-apex-pmd/master/images/apex-pmd.gif)
+Based on Charles Jonas's [vscode-apex-pmd](https://github.com/ChuckJonas/vscode-apex-pmd) extension.
 
 ### Current actions Supported
 
@@ -21,7 +19,7 @@ Allows you to run [Apex Static Analysis](https://pmd.github.io/latest/index.html
 ## System Requirements
 
 - Must have JRE >= 1.8 installed and in path
-- See [PMD System Requirements](https://pmd.github.io/pmd-6.11.0/pmd_userdocs_installation.html#requirements) for more details
+- See [PMD System Requirements](https://pmd.github.io/pmd-6.41.0/pmd_userdocs_installation.html#requirements) for more details
 
 ## Configuration
 
@@ -39,13 +37,13 @@ Allows you to run [Apex Static Analysis](https://pmd.github.io/latest/index.html
 
 ### Defining your own "Ruleset"
 
-I recommend you use the [default ruleset](https://github.com/ChuckJonas/vscode-apex-pmd/blob/master/rulesets/apex_ruleset.xml) as a starting point.
+I recommend you use the [default ruleset](https://github.com/cracrayol/vscode-java-pmd/blob/master/rulesets/quickstart.xml) as a starting point.
 
-Set `apexPMD.rulesets` string array to reference your custom rulesets. You can either use the absolute paths, or a relative paths from your workspace (EG `my-apex-rules.xml`).
+Set `javaPMD.rulesets` string array to reference your custom rulesets. You can either use the absolute paths, or a relative paths from your workspace (EG `my-java-rules.xml`).
 
-You can also mention the default ruleset in `apexPMD.rulesets`. To do this add `default` value to the array.
+You can also mention the default ruleset in `javaPMD.rulesets`. To do this add `default` value to the array.
 
-[Apex Ruleset Reference](https://pmd.github.io/pmd-6.11.0/pmd_rules_apex.html)
+[Java Ruleset Reference](https://pmd.github.io/pmd-6.41.0/pmd_rules_java.html)
 
 NOTE: If you move away from the default ruleset in an sfdx project, make sure to exclude the `.sfdx` generated classes by keeping this line:
 

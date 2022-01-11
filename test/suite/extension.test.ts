@@ -10,17 +10,17 @@ import * as assert from 'assert';
 // as well as import your extension to test it
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { ApexPmd } from '../../src/extension';
+import { JavaPmd } from '../../src/extension';
 import { Config } from '../../src/lib/config';
 
 const PMD_PATH = path.join(__dirname, '..', '..', '..', 'bin', 'pmd');
-const RULESET_PATH = path.join(__dirname, '..', '..', '..', 'rulesets', 'apex_ruleset.xml');
-const INVALID_RULESET_PATH = path.join(__dirname, '..', '..', '..', 'rulesets', 'apex_ruleset_invalid.xml');
-const TEST_APEX_PATH = path.join(__dirname, '..', '..', '..', 'test', 'assets', 'test.cls');
+const RULESET_PATH = path.join(__dirname, '..', '..', '..', 'rulesets', 'quickstart.xml');
+const INVALID_RULESET_PATH = path.join(__dirname, '..', '..', '..', 'rulesets', 'java_ruleset_invalid.xml');
+const TEST_JAVA_PATH = path.join(__dirname, '..', '..', '..', 'test', 'assets', 'test.java');
 
 suite('Extension Tests', () => {
   test('check default paths', () => {
-    const outputChannel = vscode.window.createOutputChannel('Apex PMD');
+    const outputChannel = vscode.window.createOutputChannel('Java PMD');
 
     const config = new Config();
     config.pmdBinPath = PMD_PATH;
@@ -32,7 +32,7 @@ suite('Extension Tests', () => {
     config.showStdErr = false;
     config.additionalClassPaths = [];
 
-    const pmd = new ApexPmd(outputChannel, config);
+    const pmd = new JavaPmd(outputChannel, config);
 
     assert.equal(pmd.checkPmdPath(), true);
     assert.equal(pmd.getRulesets()[0], RULESET_PATH);
@@ -44,8 +44,8 @@ suite('Extension Tests', () => {
   test('test diagnostic warning', function (done) {
     this.timeout(100000);
 
-    const collection = vscode.languages.createDiagnosticCollection('apex-pmd-test');
-    const outputChannel = vscode.window.createOutputChannel('Apex PMD');
+    const collection = vscode.languages.createDiagnosticCollection('java-pmd-test');
+    const outputChannel = vscode.window.createOutputChannel('Java PMD');
 
     const config = new Config();
     config.pmdBinPath = PMD_PATH;
@@ -59,13 +59,13 @@ suite('Extension Tests', () => {
     config.additionalClassPaths = [];
     config.commandBufferSize = 64000000;
 
-    const pmd = new ApexPmd(outputChannel, config);
+    const pmd = new JavaPmd(outputChannel, config);
 
-    const testApexUri = vscode.Uri.file(TEST_APEX_PATH);
+    const testJavaUri = vscode.Uri.file(TEST_JAVA_PATH);
     pmd
-      .run(TEST_APEX_PATH, collection)
+      .run(TEST_JAVA_PATH, collection)
       .then(() => {
-        const errs = collection.get(testApexUri);
+        const errs = collection.get(testJavaUri);
         assert.equal(errs.length, 1);
         done();
       })
