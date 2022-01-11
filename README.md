@@ -1,7 +1,7 @@
 # vscode Java Pmd
 
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/cracrayol.java-pmd) ![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/total/cracrayol.java-pmd)](https://marketplace.visualstudio.com/items?itemName=cracrayol.java-pmd)
-[![Build Status](https://travis-ci.org/cracrayol/vscode-java-pmd.svg?branch=master)](https://travis-ci.org/cracrayol/vscode-java-pmd)
+[![Build Status](https://github.com/cracrayol/vscode-java-pmd/actions/workflows/node.js.yml/badge.svg)](https://github.com/cracrayol/vscode-java-pmd/actions/workflows/node.js.yml)
 
 Allows you to run [Java Static Analysis](https://pmd.github.io/latest/index.html) directly in vscode on java files.
 
