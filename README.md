@@ -69,7 +69,7 @@ Any pull request submitted with updates to PMD MUST BE "CHECKSUMED"!
 
 ## Legal Stuff
 
-Copyright (c) 2020 Charles Jonas and Contributors
+Copyright (c) 2022 cracrayol, Charles Jonas and Contributors
 
 ### PMD License
 
