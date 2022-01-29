@@ -1,4 +1,4 @@
-# vscode Java Pmd
+# VSCode Java Pmd
 
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/cracrayol.java-pmd) ![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/total/cracrayol.java-pmd)](https://marketplace.visualstudio.com/items?itemName=cracrayol.java-pmd)
 [![Build Status](https://github.com/cracrayol/vscode-java-pmd/actions/workflows/node.js.yml/badge.svg)](https://github.com/cracrayol/vscode-java-pmd/actions/workflows/node.js.yml)
@@ -19,7 +19,7 @@ Based on Charles Jonas's [vscode-apex-pmd](https://github.com/ChuckJonas/vscode-
 ## System Requirements
 
 - Must have JRE >= 1.8 installed and in path
-- See [PMD System Requirements](https://pmd.github.io/pmd-6.41.0/pmd_userdocs_installation.html#requirements) for more details
+- See [PMD System Requirements](https://pmd.github.io/pmd-6.42.0/pmd_userdocs_installation.html#requirements) for more details
 
 ## Configuration
 
@@ -43,11 +43,7 @@ Set `javaPMD.rulesets` string array to reference your custom rulesets. You can e
 
 You can also mention the default ruleset in `javaPMD.rulesets`. To do this add `default` value to the array.
 
-[Java Ruleset Reference](https://pmd.github.io/pmd-6.41.0/pmd_rules_java.html)
-
-NOTE: If you move away from the default ruleset in an sfdx project, make sure to exclude the `.sfdx` generated classes by keeping this line:
-
-`<exclude-pattern>.*/.sfdx/.*</exclude-pattern>`
+[Java Ruleset Reference](https://pmd.github.io/pmd-6.42.0/pmd_rules_java.html)
 
 ### Using custom rules written in Java
 

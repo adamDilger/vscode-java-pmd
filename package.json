@@ -2,8 +2,9 @@
   "name": "java-pmd",
   "displayName": "Java PMD",
   "description": "PMD static analysis for Java",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "publisher": "cracrayol",
+  "license": "MIT",
   "author": {
     "name": "cracrayol",
     "email": "contact@cracrayol.org"
