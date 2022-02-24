@@ -2,7 +2,7 @@
   "name": "java-pmd",
   "displayName": "Java PMD",
   "description": "PMD static analysis for Java",
-  "version": "0.5.9",
+  "version": "0.6.0",
   "publisher": "cracrayol",
   "license": "MIT",
   "author": {
@@ -39,18 +39,18 @@
     "commands": [
       {
         "command": "java-pmd.runWorkspace",
-        "title": "On Workspace",
-        "category": "Java Static Analysis"
+        "title": "Static analysis on workspace",
+        "category": "Java PMD"
       },
       {
         "command": "java-pmd.runFile",
-        "title": "On File",
-        "category": "Java Static Analysis"
+        "title": "Static analysis on file",
+        "category": "Java PMD"
       },
       {
         "command": "java-pmd.clearProblems",
-        "title": "Clear Problems",
-        "category": "Java Static Analysis"
+        "title": "Clear problems",
+        "category": "Java PMD"
       }
     ],
     "configuration": {
