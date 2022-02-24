@@ -49,11 +49,20 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('java-pmd.runFile', (fileName: string) => {
+    vscode.commands.registerCommand('java-pmd.runFile', (fileName: string | vscode.Uri) => {
       if (!fileName) {
-        fileName = vscode.window.activeTextEditor.document.fileName;
+        fileName = vscode.window.activeTextEditor.document.uri;
       }
-      pmd.run(fileName, collection);
+
+      if(fileName instanceof vscode.Uri) {
+        if(fileName.scheme == 'file') {
+          pmd.run(fileName.fsPath, collection);
+        } else {
+          outputChannel.append("Not analysing " + fileName.path + ": scheme not managed.")
+        }
+      } else {
+        pmd.run(fileName, collection);
+      }
     })
   );
 
