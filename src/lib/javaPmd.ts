@@ -5,10 +5,34 @@ import { Config } from './config';
 import { AppStatus } from './appStatus';
 import * as os from 'os';
 import { fileExists, dirExists } from './utils';
-import { parsePmdCsv } from './pmdCsvParser';
 
 //setup OS constants
 const CLASSPATH_DELM = os.platform() === 'win32' ? ';' : ':';
+
+// PMD JSON output interfaces 
+interface PmdJson {
+  formatVersion: number,
+  pmdVersion: string,
+  timestamp: string,
+  files: PmdFile[]
+}
+
+interface PmdFile {
+  filename: string,
+  violations: PmdViolation[]
+}
+
+interface PmdViolation {
+  beginline: number,
+  begincolumn: number,
+  endline: number,
+  endcolumn: number,
+  description: string,
+  rule: string,
+  ruleset: string,
+  priority: number,
+  externalInfoUrl: string
+}
 
 export class JavaPmd {
   private config: Config;
@@ -128,7 +152,7 @@ export class JavaPmd {
     const rulesetsArg = this.rulesets.join(',');
 
     const cacheKey = enableCache ? `--cache "${cachePath}"` : '--no-cache';
-    const formatKey = `-f csv`;
+    const formatKey = `-f json`;
     const targetPathKey = `-d "${targetPath}"`;
     const rulesetsKey = `-R "${rulesetsArg}"`;
 
@@ -180,53 +204,37 @@ export class JavaPmd {
     return pmdPromise;
   }
 
-  parseProblems(csv: string): Map<string, Array<vscode.Diagnostic>> {
-    const results = parsePmdCsv(csv);
+  parseProblems(json: string): Map<string, Array<vscode.Diagnostic>> {
+    const results = <PmdJson>JSON.parse(json);
 
     const problemsMap = new Map<string, Array<vscode.Diagnostic>>();
     let problemCount = 0;
 
-    for (let i = 1; i < results.length; i++) {
-      try {
-        const result = results[i];
-        if (!results[i]) continue;
+    for (const file of results.files) {
+      for (const violation of file.violations) {
 
-        //skip .sfdx files
-        if (result.file.includes('.sfdx')) {
-          continue;
-        }
-
-        const problem = this.createDiagnostic(result);
-        if (!problem) continue;
+        const problem = this.createDiagnostic(violation);
 
         problemCount++;
-        if (problemsMap.has(result.file)) {
-          problemsMap.get(result.file).push(problem);
+        if (problemsMap.has(file.filename)) {
+          problemsMap.get(file.filename).push(problem);
         } else {
-          problemsMap.set(result.file, [problem]);
+          problemsMap.set(file.filename, [problem]);
         }
-      } catch (ex) {
-        this.outputChannel.appendLine(ex);
       }
     }
     this.outputChannel.appendLine(`${problemCount} issue(s) found`);
     return problemsMap;
   }
 
-  createDiagnostic(result: PmdResult): vscode.Diagnostic {
+  createDiagnostic(violation: PmdViolation): vscode.Diagnostic {
     const { priorityErrorThreshold, priorityWarnThreshold } = this.config;
-    const lineNum = parseInt(result.line) - 1;
+    const lineNum = violation.beginline - 1;
 
-    const uri = `https://pmd.github.io/latest/pmd_rules_java_${result.ruleSet
-      .split(' ')
-      .join('')
-      .toLowerCase()}.html#${result.rule.toLowerCase()}`;
-    const msg = `${result.description} (rule: ${result.ruleSet}-${result.rule})`;
+    const uri = violation.externalInfoUrl;
+    const msg = `${violation.description} (rule: ${violation.ruleset}-${violation.rule})`;
 
-    const priority = parseInt(result.priority);
-    if (isNaN(lineNum)) {
-      return null;
-    }
+    const priority = violation.priority;
 
     let level: vscode.DiagnosticSeverity;
     if (priority <= priorityErrorThreshold) {
@@ -242,8 +250,9 @@ export class JavaPmd {
       msg,
       level
     );
-    problem.code = { target: vscode.Uri.parse(uri), value: result.rule };
+    problem.code = { target: vscode.Uri.parse(uri), value: violation.rule };
     problem.source = 'java pmd';
+
     return problem;
   }
 
