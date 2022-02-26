@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.6.0]
 ### Change
+- upgraded PMD to 6.43.0
 - fix calling PMD from context menu
 - change commands name
 - use PMD JSON output instead of CSV
