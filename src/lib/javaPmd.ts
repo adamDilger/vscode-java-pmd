@@ -272,7 +272,7 @@ export class JavaPmd {
       return true;
     }
     vscode.window.showErrorMessage(
-      `No Ruleset not found at ${rulesetPath}. Ensure configuration correct or change back to the default.`
+      `No Ruleset found at ${rulesetPath}. Ensure configuration correct or change back to the default.`
     );
     return false;
   }
