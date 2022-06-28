@@ -11,7 +11,7 @@ Based on Charles Jonas's [vscode-apex-pmd](https://github.com/ChuckJonas/vscode-
 
 - Run analysis on file open
 - Run analysis on file save
-- Run analysis on file change (new!)
+- Run analysis on file change
 - Run analysis on entire workspace
 - Run analysis on single file
 - Ability to define your own ruleset
