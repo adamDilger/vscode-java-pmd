@@ -63,6 +63,8 @@ If you want to use your own [custom rules](https://pmd.github.io/latest/pmd_user
 
 Any pull request submitted with updates to PMD MUST BE "CHECKSUMED"!
 
+Note : Doesn't work anymore since PMD 7.0. Need some corrections (need to include pmd-cli, cli dependencies and bom files).
+
 ## Legal Stuff
 
 Copyright (c) 2022 cracrayol, Charles Jonas and Contributors

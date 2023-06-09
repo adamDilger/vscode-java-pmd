@@ -165,7 +165,7 @@ export class JavaPmd {
     ].join(CLASSPATH_DELM);
 
     const javaExc = this.config.jrePath ? path.join(this.config.jrePath, 'bin', 'java') : 'java';
-    const cmd = `${javaExc} -cp "${classPath}" net.sourceforge.pmd.PMD ${pmdKeys}`;
+    const cmd = `${javaExc} -cp "${classPath}" net.sourceforge.pmd.cli.PmdCli check ${pmdKeys}`;
 
     if (showStdOut) this.outputChannel.appendLine('PMD Command: ' + cmd);
 
