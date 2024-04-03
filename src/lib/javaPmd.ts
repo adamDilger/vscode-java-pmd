@@ -56,6 +56,7 @@ export class JavaPmd {
     progress?: vscode.Progress<{ message?: string; increment?: number }>,
     token?: vscode.CancellationToken
   ): Promise<void> {
+    this.outputChannel.appendLine('###################################');
     this.outputChannel.appendLine(`Analyzing ${targetPath}`);
     AppStatus.getInstance().thinking();
 
@@ -112,6 +113,7 @@ export class JavaPmd {
     } catch (e) {
       AppStatus.getInstance().errors();
       vscode.window.showErrorMessage(`Static Analysis Failed. Error Details: ${e}`);
+      this.outputChannel.show(true);
       // should this throw e for promise catch?
     }
   }
@@ -141,14 +143,12 @@ export class JavaPmd {
       enableCache,
       pmdBinPath,
       additionalClassPaths,
-      showStdOut,
-      showStdErr,
       commandBufferSize,
-      showErrors,
     } = this.config;
 
     // -R Comma-separated list of ruleset or rule references.
     const cachePath = `${workspaceRootPath}/.pmdCache`;
+    const noProgressBar = '--no-progress';
     const rulesetsArg = this.rulesets.join(',');
 
     const cacheKey = enableCache ? `--cache "${cachePath}"` : '--no-cache';
@@ -156,20 +156,37 @@ export class JavaPmd {
     const targetPathKey = `-d "${targetPath}"`;
     const rulesetsKey = `-R "${rulesetsArg}"`;
 
-    const pmdKeys = `${formatKey} ${cacheKey} ${targetPathKey} ${rulesetsKey}`;
+    const pmdKeys = `${noProgressBar} ${formatKey} ${cacheKey} ${targetPathKey} ${rulesetsKey}`;
 
+    
     const classPath = [
-      path.join(pmdBinPath, 'lib', '*'),
       path.join(workspaceRootPath, '*'),
       ...additionalClassPaths,
     ].join(CLASSPATH_DELM);
 
-    const javaExc = this.config.jrePath ? path.join(this.config.jrePath, 'bin', 'java') : 'java';
-    const cmd = `${javaExc} -cp "${classPath}" net.sourceforge.pmd.cli.PmdCli check ${pmdKeys}`;
+    let env : NodeJS.ProcessEnv = {};
+    if (os.platform() === 'win32') {
+      // add surrounding quotes in case workspaceRootPath or additionalClassPaths contains spaces
+      env["CLASSPATH"] = `"${classPath}"`;
+    } else {
+      env["CLASSPATH"] = `${classPath}`;
+    }
+    if (this.config.jrePath) {
+      if (os.platform() === 'win32') {
+        // add surrounding quotes in case jrePath contains spaces
+        env["PATH"] = `"${path.join(this.config.jrePath, 'bin')}${path.delimiter}${process.env.PATH}"`;
+      } else {
+        env["PATH"] = `${path.join(this.config.jrePath, 'bin')}${path.delimiter}${process.env.PATH}`;
+      }
+    }
 
-    if (showStdOut) this.outputChannel.appendLine('PMD Command: ' + cmd);
+    const cmd = `"${path.join(pmdBinPath, 'bin', 'pmd')}" check ${pmdKeys}`;
+
+    this.outputChannel.appendLine(`env: ${JSON.stringify(env)}`);
+    this.outputChannel.appendLine('PMD Command: ' + cmd);
 
     const pmdCmd = ChildProcess.exec(cmd, {
+      env: {...process.env, ...env},
       maxBuffer: Math.max(commandBufferSize, 1) * 1024 * 1024,
     });
 
@@ -179,26 +196,31 @@ export class JavaPmd {
       });
 
     let stdout = '';
+    let stderr = '';
     const pmdPromise = new Promise<string>((resolve, reject) => {
       pmdCmd.addListener('error', (e) => {
-        if (showErrors) this.outputChannel.appendLine('error:' + e);
+        this.outputChannel.appendLine('error:' + e);
         reject(e);
       });
       pmdCmd.addListener('exit', (e) => {
         if (e !== 0 && e !== 4) {
           this.outputChannel.appendLine(`Failed Exit Code: ${e}`);
+          if (stderr.includes('Cannot load ruleset')) {
+            reject('PMD Command Failed!  There is a problem with the ruleset. Check the plugin output for details.')
+          }
           if (!stdout) {
-            reject('PMD Command Failed!  Enable "Show StdErr" setting for more info.');
+            reject('PMD Command Failed!  Check the plugin output for details.');
           }
         }
         resolve(stdout);
       });
       pmdCmd.stdout.on('data', (m: string) => {
-        if (showStdOut) this.outputChannel.appendLine('stdout:' + m);
+        this.outputChannel.append('stdout:' + m);
         stdout += m;
       });
       pmdCmd.stderr.on('data', (m: string) => {
-        if (showStdErr) this.outputChannel.appendLine('stderr:' + m);
+        this.outputChannel.append('stderr:' + m);
+        stderr += m;
       });
     });
     return pmdPromise;

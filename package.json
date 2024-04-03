@@ -2,7 +2,7 @@
   "name": "java-pmd",
   "displayName": "Java PMD",
   "description": "PMD static analysis for Java",
-  "version": "0.7.0-rc",
+  "version": "0.7.0",
   "publisher": "cracrayol",
   "license": "MIT",
   "author": {
@@ -100,21 +100,6 @@
           "default": 3,
           "description": "Determines at what priority level 'warnings' will be added. Anything less will be a hint"
         },
-        "javaPMD.showErrors": {
-          "type": "boolean",
-          "default": true,
-          "description": "Show errors in output window"
-        },
-        "javaPMD.showStdOut": {
-          "type": "boolean",
-          "default": false,
-          "description": "Show showStdOut in output window"
-        },
-        "javaPMD.showStdErr": {
-          "type": "boolean",
-          "default": true,
-          "description": "Show showStdErr in output window"
-        },
         "javaPMD.enableCache": {
           "type": "boolean",
           "default": false,
@@ -158,10 +143,10 @@
   },
   "scripts": {
     "postversion": "npm run vscode:package && git push --tags && npm run vscode:publish && git push && echo \"Successfully released version $npm_package_version!\"",
-    "vscode:package": "npx vsce package",
+    "vscode:package": "npx vsce package --allow-star-activation",
     "vscode:publish": "npx vsce publish",
     "vscode:prepublish": "npm run build:prod",
-    "build:prod": "webpack --mode production",
+    "build:prod": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --mode production",
     "build:test": "tsc",
     "pretest": "npm run build:prod && npm run build:test",
     "update-pmd": "cd pmd-packager && ./upgrade.sh",
@@ -170,22 +155,23 @@
   "devDependencies": {
     "@types/debounce": "^1.2.1",
     "@types/glob": "^7.2.0",
-    "@types/mocha": "^9.1.0",
+    "@types/mocha": "^10.0.1",
     "@types/node": "^16.11.7",
     "@types/vscode": "^1.43.0",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
-    "@vscode/test-electron": "^2.1.3",
+    "@vscode/test-electron": "^2.3.4",
+    "cross-env": "^7.0.3",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "mocha": "^9.2.2",
+    "mocha": "^10.2.0",
     "prettier": "^2.6.0",
     "ts-loader": "^9.2.8",
     "tslint": "^6.1.3",
     "typescript": "^4.6.2",
-    "webpack": "^5.70.0",
-    "webpack-cli": "^4.9.2"
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "debounce": "^1.2.1"
