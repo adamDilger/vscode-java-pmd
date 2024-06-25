@@ -4,8 +4,12 @@ All notable changes to the VS Code PMD for Java will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.3]
+### Change
+- Rename extension to "PMD for Java"
+
 ## [0.7.2]
-### Fixed Issues
+### Change
 - upgraded PMD to 7.2.0
 
 ## [0.7.1]
@@ -41,9 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.6.0]
 ### Change
 - upgraded PMD to 6.43.0
-- fix calling PMD from context menu
-- change commands name
 - use PMD JSON output instead of CSV
+- change commands name
+### Fixed Issues
+- fix calling PMD from context menu
 
 ## [0.5.9]
 ### Change
