@@ -273,7 +273,7 @@ export class JavaPmd {
       level
     );
     problem.code = { target: vscode.Uri.parse(uri), value: violation.rule };
-    problem.source = 'java pmd';
+    problem.source = 'pmd java';
 
     return problem;
   }

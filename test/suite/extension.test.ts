@@ -19,7 +19,7 @@ const INVALID_RULESET_PATH = path.join(__dirname, '..', '..', '..', 'rulesets', 
 const TEST_ASSETS_PATH = path.join(__dirname, '..', '..', '..', 'test', 'assets');
 const TEST_JAVA_PATH = path.join(TEST_ASSETS_PATH, 'test.java');
 
-const outputChannel = vscode.window.createOutputChannel('Java PMD');
+const outputChannel = vscode.window.createOutputChannel('PMD for Java');
 
 
 suite('Extension Tests', () => {

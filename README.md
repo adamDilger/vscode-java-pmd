@@ -1,4 +1,4 @@
-# VSCode Java Pmd
+# VSCode PMD for Java
 
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/cracrayol.java-pmd) ![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/total/cracrayol.java-pmd)](https://marketplace.visualstudio.com/items?itemName=cracrayol.java-pmd)
 [![Build Status](https://github.com/cracrayol/vscode-java-pmd/actions/workflows/node.js.yml/badge.svg)](https://github.com/cracrayol/vscode-java-pmd/actions/workflows/node.js.yml)
@@ -19,7 +19,7 @@ Based on Charles Jonas's [vscode-apex-pmd](https://github.com/ChuckJonas/vscode-
 ## System Requirements
 
 - Must have JRE >= 1.8 installed and in path
-- See [PMD System Requirements](https://pmd.github.io/pmd-6.42.0/pmd_userdocs_installation.html#requirements) for more details
+- See [PMD System Requirements](https://docs.pmd-code.org/latest/pmd_userdocs_installation.html#requirements) for more details
 
 ## Configuration
 
@@ -43,7 +43,7 @@ Set `javaPMD.rulesets` string array to reference your custom rulesets. You can e
 
 You can also mention the default ruleset in `javaPMD.rulesets`. To do this add `default` value to the array.
 
-[Java Ruleset Reference](https://pmd.github.io/pmd-6.42.0/pmd_rules_java.html)
+[Java Ruleset Reference](https://docs.pmd-code.org/latest/pmd_rules_java.html)
 
 ### Using custom rules written in Java
 
@@ -62,8 +62,6 @@ If you want to use your own [custom rules](https://pmd.github.io/latest/pmd_user
 `npm run update-pmd`
 
 Any pull request submitted with updates to PMD MUST BE "CHECKSUMED"!
-
-Note : Doesn't work anymore since PMD 7.0. Need some corrections (need to include pmd-cli, cli dependencies and bom files).
 
 ## Legal Stuff
 

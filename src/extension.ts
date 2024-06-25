@@ -11,7 +11,7 @@ export { JavaPmd };
 const supportedLanguageCodes = ['java'];
 const isSupportedLanguage = (langCode: string) => 0 <= supportedLanguageCodes.indexOf(langCode);
 
-const appName = 'Java PMD';
+const appName = 'PMD for Java';
 const settingsNamespace = 'javaPMD';
 const collection = vscode.languages.createDiagnosticCollection('java-pmd');
 const outputChannel = vscode.window.createOutputChannel(appName);

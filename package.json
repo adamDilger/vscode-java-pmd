@@ -1,6 +1,6 @@
 {
-  "name": "java-pmd",
-  "displayName": "Java PMD",
+  "name": "pmd-java",
+  "displayName": "PMD for Java",
   "description": "PMD static analysis for Java",
   "version": "0.7.2",
   "publisher": "cracrayol",
@@ -29,10 +29,7 @@
     "PMD"
   ],
   "activationEvents": [
-    "onLanguage:java",
-    "onCommand:java-pmd.runWorkspace",
-    "onCommand:java-pmd.runFile",
-    "onCommand:java-pmd.clearProblems"
+    "onLanguage:java"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -40,22 +37,22 @@
       {
         "command": "java-pmd.runWorkspace",
         "title": "Static analysis on workspace",
-        "category": "Java PMD"
+        "category": "PMD for Java"
       },
       {
         "command": "java-pmd.runFile",
         "title": "Static analysis on file",
-        "category": "Java PMD"
+        "category": "PMD for Java"
       },
       {
         "command": "java-pmd.clearProblems",
         "title": "Clear problems",
-        "category": "Java PMD"
+        "category": "PMD for Java"
       }
     ],
     "configuration": {
       "type": "object",
-      "title": "Java PMD configuration",
+      "title": "PMD for Java configuration",
       "properties": {
         "javaPMD.pmdBinPath": {
           "type": "string",

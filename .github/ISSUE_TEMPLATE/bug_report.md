@@ -12,10 +12,10 @@ assignees: ''
 **Describe the bug**
 A clear and concise description of what the bug is.
 
-**Java PMD Output**
-<!-- Copy the output of the output channel "Java PMD" from the output view -->
+**PMD for Java Output**
+<!-- Copy the output of the output channel "PMD for Java" from the output view -->
 
-**Java PMD Settings**
+**PMD for Java Settings**
 <!-- Please provide the "EFFECTIVE" (check workspace & user) settings -->
 
 - pmdBinPath:
